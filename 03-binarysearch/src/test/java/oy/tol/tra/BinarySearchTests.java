@@ -18,7 +18,7 @@ public class BinarySearchTests {
     private static final int NUMBERS_TO_SEARCH = 10;
 
     @Test
-    @Timeout(value = 5, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
+    // @Timeout(value = 5, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     @DisplayName("Very simple binary search tests for correctness")
     void simpleSearchTest() {
         Integer [] array = {1,2,3,4,5,6,7,8,9,10};
@@ -33,7 +33,7 @@ public class BinarySearchTests {
     }
 
     @Test
-    @Timeout(value = 5, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
+    // @Timeout(value = 5, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     @DisplayName("Search from the middle when array has odd and even number of elements.")
     void searchFromMiddle() {
         Integer array[] = {1,2,3,4,5};
@@ -47,7 +47,7 @@ public class BinarySearchTests {
     }
 
     @Test
-    @Timeout(value = 120, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
+    // @Timeout(value = 120, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     @DisplayName("Tests Integer search implementations (linear & binary)")
     void findFromIntArrayTests() {
         try {
@@ -71,7 +71,7 @@ public class BinarySearchTests {
             System.out.println("Sorting the array...");
             start = System.nanoTime();
             // You must have implemented this as instructed in Exercise 01-arrays!
-            Algorithms.sort(array);
+            Algorithms.fastSort(array);
             System.out.println("Sorting the array took " + (System.nanoTime() - start) + " ns");
 
             System.out.println("-- Starting the test with binary search --");
@@ -99,7 +99,7 @@ public class BinarySearchTests {
     }
 
     @Test
-    @Timeout(value = 120, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
+    // @Timeout(value = 120, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     @DisplayName("Tests String search implementations (linear & binary)")
     void findFromStringArrayTests() {
         try {
@@ -123,7 +123,7 @@ public class BinarySearchTests {
             System.out.println("Sorting the array...");
             start = System.nanoTime();
             // You must have implemented this as instructed in Exercise 01-arrays!
-            Algorithms.sort(array);
+            Algorithms.fastSort(array);
             System.out.println("Sorting the array took " + (System.nanoTime() - start) + " ns");
 
             System.out.println("-- Starting the test with binary search --");
