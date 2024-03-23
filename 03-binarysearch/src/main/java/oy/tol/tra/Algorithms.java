@@ -50,25 +50,25 @@ public class Algorithms {
 
     public static <E extends Comparable<E>> void quickSort(E[] array, int begin, int end) {
         if (begin < end) {
-            int q = partition(array, begin, end);
-            quickSort(array, begin, q - 1);
-            quickSort(array, q + 1, end);
+            int k = partition(array, begin, end);
+            quickSort(array, begin, k - 1);
+            quickSort(array, k + 1, end);
         }
 
     }
 
     private static <E extends Comparable<E>> int partition(E[] array, int begin, int end) {
 
-        E p = array[begin]; 
+        E z = array[begin]; 
         int left = begin;
         int right = end;
 
         while (left < right) {
-            while (left < right && array[right].compareTo(p) > 0) {
+            while (left < right && array[right].compareTo(z) > 0) {
                 right--;
             }
 
-            while (left < right && array[left].compareTo(p) <= 0) {
+            while (left < right && array[left].compareTo(z) <= 0) {
                 left++;
             }
 
@@ -80,7 +80,7 @@ public class Algorithms {
         }
 
         array[begin] = array[left];
-        array[left] = p;
+        array[left] = z;
         return left;
     }
 
