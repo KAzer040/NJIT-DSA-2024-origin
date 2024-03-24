@@ -31,18 +31,15 @@ public class Person implements Comparable<Person> {
         return getFullName();
     }
 
-    /**
-     * TODO: Implement the method below to return a hash value. It must be calculated from the
-     * first and last name of the person.
-     * 
-     * @return Hash value of the person.
-     */
     @Override
     public int hashCode() {
-        int hash = 5381;
-        // Implement hash function here.
-        return hash;
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
+        result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
+        return result;
     }
+    
 
     @Override
     public boolean equals(Object other) {

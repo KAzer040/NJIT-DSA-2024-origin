@@ -11,29 +11,13 @@ public class KeyValueBSearchTree<K extends Comparable<K>, V> implements Dictiona
 
     @Override
     public Type getType() {
-        return Type.NONE;
+        return Type.BST;
     }
 
     @Override
     public int size() {
-        // TODO: Implement this
-        return 0;
+        return count;
     }
-
-    /**
-     * Prints out the statistics of the tree structure usage.
-     * Here you should print out member variable information which tell something
-     * about
-     * your implementation.
-     * <p>
-     * For example, if you implement this using a hash table, update member
-     * variables of the class
-     * (int counters) in add(K) whenever a collision happen. Then print this counter
-     * value here.
-     * You will then see if you have too many collisions. It will tell you that your
-     * hash function
-     * is good or bad (too much collisions against data size).
-     */
     @Override
     public String getStatus() {
         String toReturn = "Tree has max depth of " + maxTreeDepth + ".\n";
@@ -48,26 +32,37 @@ public class KeyValueBSearchTree<K extends Comparable<K>, V> implements Dictiona
 
     @Override
     public boolean add(K key, V value) throws IllegalArgumentException, OutOfMemoryError {
-        // TODO: Implement this
-        // Remember null check.
-        // If root is null, should go there.
-        
-            // update the root node. But it may have children
-            // so do not just replace it with this new node but set
-            // the keys and values for the already existing root.
-            
-        return false;
+      public boolean add(K key, V value) throws IllegalArgumentException, OutOfMemoryError {
+          if (root == null) {
+              if (key == null || value == null) {
+                  throw new IllegalArgumentException("the key and value can not be null");
+              }
+              root = new TreeNode<>(key, value);
+              count++;
+          } else {
+              if (key == null || value == null) {
+                  throw new IllegalArgumentException("the key and value can not be null");
+              }
+              int result = root.insert(key, value, key.hashCode());
+              if (result == 1) {
+                  count++;
+              }
+          }
+          return true;
+      }
+      
     }
 
     @Override
     public V find(K key) throws IllegalArgumentException {
-        // TODO: Implement this. //Think about this
-        return (null);
+        if(key==null){
+            throw new IllegalArgumentException("the key can not be null");
+        }
+        return root.find(key, key.hashCode());
     }
 
     @Override
     public void ensureCapacity(int size) throws OutOfMemoryError {
-        // Nothing to do here. Trees need no capacity.
     }
 
     @Override
