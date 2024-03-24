@@ -2,8 +2,7 @@ package oy.tol.tra;
 
 public class KeyValueBSearchTree<K extends Comparable<K>, V> implements Dictionary<K, V> {
 
-    // This is the BST implementation, KeyValueHashTable has the hash table
-    // implementation
+
 
     private TreeNode<K, V> root;
     private int count = 0;
@@ -29,8 +28,6 @@ public class KeyValueBSearchTree<K extends Comparable<K>, V> implements Dictiona
             toReturn += "Min path height to bottom: " + visitor.minHeight + "\n";
             toReturn += "Max path height to bottom: " + visitor.maxHeight + "\n";
             toReturn += "Ideal height if balanced: " + Math.ceil(Math.log(count)) + "\n";
-        } else {
-            toReturn += "Tree is empty.\n";
         }
         return toReturn;
     }
@@ -43,12 +40,15 @@ public class KeyValueBSearchTree<K extends Comparable<K>, V> implements Dictiona
         if (root == null) {
             root = new TreeNode<>(key, value);
             count++;
+            maxTreeDepth = 1;
         } else {
             int result = root.insert(key, value, key.hashCode());
             if (result == 1) {
                 count++;
+                maxTreeDepth = Math.max(maxTreeDepth, TreeNode.currentAddTreeDepth);
             }
         }
+
         return true;
     }
 
@@ -60,8 +60,7 @@ public class KeyValueBSearchTree<K extends Comparable<K>, V> implements Dictiona
         if (root != null) {
             return root.find(key, key.hashCode());
         }
-        return null; // Return null if the tree is empty
-    }
+        return null;
 
     @Override
     public void ensureCapacity(int size) throws OutOfMemoryError {
