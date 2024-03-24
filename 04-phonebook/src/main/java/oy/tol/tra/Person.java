@@ -8,7 +8,7 @@ public class Person implements Comparable<Person> {
         this.firstName = new String(person.firstName);
         this.lastName = new String(person.lastName);
     }
-    
+
     public Person(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -33,18 +33,18 @@ public class Person implements Comparable<Person> {
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
-        result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
-        return result;
+        String fullName = getFullName();
+        int hash = 31;
+        for (int i = 0; i < fullName.length(); i++) {
+            hash = 31 * hash + fullName.charAt(i);
+        }
+        return hash;
     }
-    
 
     @Override
     public boolean equals(Object other) {
         if (other instanceof Person) {
-            return this.getFullName().equals(((Person)other).getFullName());
+            return this.getFullName().equals(((Person) other).getFullName());
         }
         return false;
     }
@@ -60,7 +60,9 @@ public class Person implements Comparable<Person> {
      * Return 0 if the full name is identical.
      * Return >0 if the other persons full name is larger (as string).
      * Note: String class also implements <code>compareTo()</code> you can use here.
-     * @returns Returns 0 if persons are the same otherwise depending on the full name, <0 or >0.
+     * 
+     * @returns Returns 0 if persons are the same otherwise depending on the full
+     *          name, <0 or >0.
      */
     @Override
     public int compareTo(Person other) {

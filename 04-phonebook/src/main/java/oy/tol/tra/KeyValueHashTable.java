@@ -57,61 +57,65 @@ public class KeyValueHashTable<K extends Comparable<K>, V> implements Dictionary
 
     @Override
     public boolean add(K key, V value) throws IllegalArgumentException, OutOfMemoryError {
-        public boolean insert(K key, V value) {
-            if (key == null || value == null) {
-                throw new IllegalArgumentException("the key and value can not be null");
-            }
+        if (key == null || value == null) {
+            throw new IllegalArgumentException("the key and value cannot be null");
+        }
         
-            if (((double) count * (1.0 + LOAD_FACTOR)) >= values.length) {
-                reallocate((int) ((double) (values.length) * (1.0 / LOAD_FACTOR)));
-            }
+        if (((double) count * (1.0 + LOAD_FACTOR)) >= values.length) {
+            reallocate((int) ((double) (values.length) * (1.0 / LOAD_FACTOR)));
+        }
         
-            int hash = key.hashCode();
-            int index = hash % values.length;
-            if (index < 0) {
-                index += values.length;
-            }
+        int hash = key.hashCode();
+        int index = hash % values.length;
+        if (index < 0) {
+            index += values.length;
+        }
         
-            int tmpIndex;
-            for (int i = 0; ; i++) {
-                tmpIndex = (index + i * i) % values.length;
-                if (values[tmpIndex] == null || values[tmpIndex].getKey().equals(key)) {
+        int tmpIndex;
+        for (int i = 0; ; i++) {
+            tmpIndex = (index + i * i) % values.length;
+            if (values[tmpIndex] == null || values[tmpIndex].getKey().equals(key)) {
+                // If the key already exists, update the value
+                if (values[tmpIndex] != null) {
+                    values[tmpIndex].setValue(value);
+                    return true; // Exit after updating the value
+                }
+                // Otherwise, add the new key-value pair
+                else {
                     values[tmpIndex] = new Pair<K,V>(key, value);
                     count++;
                     return true;
                 }
-                collisionCount++;
-                if (i > maxProbingSteps) {
-                    maxProbingSteps = i;
-                }
             }
-        }
-        
-    }
-
-    @Override
-    public V find(K key) throws IllegalArgumentException {
-        switch (key != null ? 1 : 0) {
-            case 0:
-                throw new IllegalArgumentException("the key cannot be null");
-            case 1:
-                int hash = key.hashCode();
-                int index = hash % values.length;
-                if (index < 0) {
-                    index += values.length;
-                }
-                int tmpIndex;
-                for (int i = 0;; i++) {
-                    tmpIndex = (index + i * i) % values.length;
-                    if (values[tmpIndex] == null) {
-                        return null;
-                    } else if (values[tmpIndex].getKey().equals(key)) {
-                        return values[tmpIndex].getValue();
-                    }
-                }
+            collisionCount++;
+            if (i > maxProbingSteps) {
+                maxProbingSteps = i;
+            }
         }
     }
     
+
+    @Override
+    public V find(K key) throws IllegalArgumentException {
+        if (key == null) {
+            throw new IllegalArgumentException("the key cannot be null");
+        }
+        
+        int hash = key.hashCode();
+        int index = hash % values.length;
+        if (index < 0) {
+            index += values.length;
+        }
+        int tmpIndex;
+        for (int i = 0;; i++) {
+            tmpIndex = (index + i * i) % values.length;
+            if (values[tmpIndex] == null) {
+                return null;
+            } else if (values[tmpIndex].getKey().equals(key)) {
+                return values[tmpIndex].getValue();
+            }
+        }
+    }
 
     @Override
     @java.lang.SuppressWarnings({"unchecked"})
