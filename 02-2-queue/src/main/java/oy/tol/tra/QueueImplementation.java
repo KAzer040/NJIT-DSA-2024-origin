@@ -38,6 +38,10 @@ public class QueueImplementation<E> implements QueueInterface<E> {
    @Override
    public void enqueue(E element) throws QueueAllocationException, NullPointerException {
 
+      if (element == null) {
+      throw new NullPointerException("element is null");
+      }
+      else{
       if (size() >= capacity) {
          Object[] NEW = new Object[this.capacity *  5];
 
@@ -55,9 +59,8 @@ public class QueueImplementation<E> implements QueueInterface<E> {
          capacity = capacity * 5;
       }
 
-         if (element == null) {
-            throw new NullPointerException("element is null");
-         }
+
+    }
 
          TAIL = (TAIL + 1) % capacity;
          itemArray[TAIL] = element;
@@ -70,6 +73,7 @@ public class QueueImplementation<E> implements QueueInterface<E> {
    @Override
    public E dequeue() throws QueueIsEmptyException {
       E k = element();
+      itemArray[HAED] = null;
       HEAD = (HEAD + 1) % capacity;
       Size--;
       return k;
