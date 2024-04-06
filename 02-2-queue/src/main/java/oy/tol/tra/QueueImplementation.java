@@ -73,7 +73,7 @@ public class QueueImplementation<E> implements QueueInterface<E> {
    @Override
    public E dequeue() throws QueueIsEmptyException {
       E k = element();
-      itemArray[HAED] = null;
+      itemArray[HEAD] = null;
       HEAD = (HEAD + 1) % capacity;
       Size--;
       return k;
