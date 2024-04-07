@@ -1,4 +1,4 @@
-package oy.tol.tra;
+package oy.tol.tra.books;
 
 import java.util.function.Predicate;
 
